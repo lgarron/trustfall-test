@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "files": [
     "trustfall_wasm_bg.wasm",
-    "trustfall_wasm.js",
-    "trustfall_wasm_bg.js"
+    "trustfall_wasm.js"
   ],
-  "module": "trustfall_wasm.js",
-  "sideEffects": false,
-  "type": "module"
+  "main": "trustfall_wasm.js"
 }
