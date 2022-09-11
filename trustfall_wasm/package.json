@@ -5,6 +5,6 @@
     "trustfall_wasm_bg.wasm",
     "trustfall_wasm.js"
   ],
-  "main": "trustfall_wasm.js",
-  "type": "module"
+  "module": "trustfall_wasm.js",
+  "sideEffects": false
 }
