@@ -1,11 +1,15 @@
 schema {
-  query: PackageLockJSON
+  query: RootSchemaQuery
+}
+
+type RootSchemaQuery {
+  Lockfile: NPMLockfile!
 }
 
 """
 Structure for `npm`'s `package-lock.json`.
 """
-type PackageLockJSON {
+type NPMLockfile {
   """
   name!
   """
