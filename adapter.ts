@@ -156,11 +156,14 @@ query {
     dependencies {
       name @filter(op: "=", value: ["$packageName"]) @output
       version @output
+      requires {
+        foo: name @output
+      }
     }
   }
 }`
 
-const results = executeQuery(SCHEMA, adapter, query, {packageName: "barely-a-dev-server"});
+const results = executeQuery(SCHEMA, adapter, query, {packageName: "typedoc"});
 for (const result of results) {
   console.log(result);
 }
