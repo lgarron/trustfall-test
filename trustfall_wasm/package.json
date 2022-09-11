@@ -1,0 +1,10 @@
+{
+  "name": "trustfall_wasm",
+  "version": "0.1.0",
+  "files": [
+    "trustfall_wasm_bg.wasm",
+    "trustfall_wasm.js"
+  ],
+  "main": "trustfall_wasm.js",
+  "type": "module"
+}
