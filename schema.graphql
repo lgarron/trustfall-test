@@ -28,6 +28,7 @@ type PackageLockFile implements PackageFileCommon {
 }
 
 type PackageDependency {
+  name: String!
   version: String!
   requires: [PackageDependency!]!
 }
