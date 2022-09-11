@@ -9,5 +9,8 @@
   },
   "keywords": [],
   "author": "lgarron <code@garron.net>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^18.7.16"
+  }
 }
