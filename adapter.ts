@@ -95,10 +95,11 @@ export class LockfileAdapter implements Adapter<Vertices> {
             case "dependencies": {
               const { localId } = data_context;
               const currentToken = data_context.currentToken as PackageLockFile | null;
+              const that = this;
               function* neighbors() {
                 const packageNames = Object.keys(currentToken?.dependencies ?? {})
                 for (const packageName of packageNames) {
-                  yield { ...this.packageLockJSON.dependencies[packageName], name: packageName }
+                  yield { ...that.packageLockJSON.dependencies[packageName], name: packageName }
                 }
               }
               yield { localId, neighbors: neighbors() }
@@ -112,10 +113,11 @@ export class LockfileAdapter implements Adapter<Vertices> {
             case "requires": {
               const { localId } = data_context;
               const currentToken = data_context.currentToken as PackageDependency | null;
+              const that = this;
               function *neighbors() {
                 const packageNames = Object.keys(currentToken?.requires ?? {})
                 for (const packageName of packageNames) {
-                  yield { ...this.packageLockJSON.dependencies[packageName], name: packageName}
+                  yield { ...that.packageLockJSON.dependencies[packageName], name: packageName}
                 }
               }
               yield {localId, neighbors: neighbors()}
@@ -153,11 +155,12 @@ query {
   PackageLockFile {
     dependencies {
       name @filter(op: "=", value: ["$packageName"]) @output
+      version @output
     }
   }
 }`
 
-const results = executeQuery(SCHEMA, adapter, query, {packageName: "three"});
+const results = executeQuery(SCHEMA, adapter, query, {packageName: "barely-a-dev-server"});
 for (const result of results) {
   console.log(result);
 }
