@@ -1,5 +1,5 @@
 import { iterify } from './snippets/trustfall_wasm-7ec00372f6bf29da/inline0.js';
-import wasm from './trustfall_wasm_bg.wasm';
+import * as wasm from './trustfall_wasm_bg.wasm';
 
 const heap = new Array(32).fill(undefined);
 
