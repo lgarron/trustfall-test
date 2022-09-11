@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
 import { readFile } from 'fs/promises';
+import { readFileSync } from 'fs';
 import {
   Schema,
   initialize,
@@ -9,6 +9,7 @@ import {
   JsContext,
   ContextAndNeighborsIterator,
   ContextAndBool,
+  executeQuery,
 } from './trustfall_wasm/trustfall_wasm.js';
 
 initialize(); // Trustfall query system init.
@@ -24,6 +25,7 @@ query {
   PackageLockFile {
     name @output
     version @output
+    lockfileVersion @output
   }
 }`
 
@@ -83,4 +85,9 @@ export class LockfileAdapter implements Adapter<Vertices> {
   }
 }
 
-new LockfileAdapter(PACKAGE_FOLDER);
+const adapter = new LockfileAdapter(PACKAGE_FOLDER);
+
+const results = executeQuery(SCHEMA, adapter, query, {});
+for (const result of results) {
+  console.log(result);
+}
