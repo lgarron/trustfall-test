@@ -4,20 +4,25 @@ schema {
 
 type RootSchemaQuery {
   PackageFile: PackageFile!
-  PackageLockFile: PackageFile!
+  PackageLockFile: PackageLockFile!
 }
 
 """
 Structure for `npm`'s `package-lock.json`.
 """
-type PackageFile {
-  """
-  name!
-  """
+interface PackageFileCommon {
   name: String!
-
-  """
-  version!
-  """
   version: String!
 }
+
+type PackageFile implements PackageFileCommon {
+  name: String!
+  version: String!
+}
+
+type PackageLockFile implements PackageFileCommon {
+  name: String!
+  version: String!
+  lockfileVersion: Int!
+}
+
