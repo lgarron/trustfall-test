@@ -29,12 +29,18 @@ query {
   }
 }`
 
+// TODO Lockfile
 type PackageFile = {
   name: string
   version: string
 }
 
-type Vertices = PackageFile
+interface PackageDependency {
+  version: string
+  requires: Record<string, string>
+}
+
+type Vertices = PackageFile | PackageDependency
 
 export class LockfileAdapter implements Adapter<Vertices> {
   packageJSON: any;
@@ -58,6 +64,7 @@ export class LockfileAdapter implements Adapter<Vertices> {
   *projectProperty(data_contexts: IterableIterator<JsContext<Vertices>>, current_type_name: string, field_name: string): IterableIterator<ContextAndValue> {
     switch (current_type_name) {
       case "PackageFileCommon":
+        // fallthrough
       case "PackageFile":
       // fallthrough
       case "PackageLockFile": {
@@ -77,9 +84,45 @@ export class LockfileAdapter implements Adapter<Vertices> {
       }
     }
   }
-  projectNeighbors(data_contexts: IterableIterator<JsContext<PackageFile>>, current_type_name: string, edge_name: string, parameters: JsEdgeParameters): IterableIterator<ContextAndNeighborsIterator<PackageFile>> {
-    throw new Error("Unimplemented!");
+
+  *projectNeighbors(data_contexts: IterableIterator<JsContext<Vertices>>, current_type_name: string, edge_name: string, parameters: JsEdgeParameters): IterableIterator<ContextAndNeighborsIterator<Vertices>> {
+    switch (current_type_name) {
+      // case "PackageLockFile": {
+      //   for (const data_context of data_contexts) {
+      //     switch (edge_name) {
+      //       case "dependencies": {
+      //         const { localId } = data_context;
+      //         function 
+      //         yield {localId, neighbors}
+      //       }
+
+      //       // case "lockfileVersion": {
+      //       //   
+      //       //   const value: string | number | null = data_context.currentToken?.[field_name] ?? null;
+      //       //   yield { localId, value }
+      //       }
+      //     }
+      //   }
+      case "PackageDependency": {
+        for (const data_context of data_contexts) {
+          switch (edge_name) {
+            case "requires": {
+              const { localId } = data_context;
+              const currentToken = data_context.currentToken as PackageDependency | null;
+              function *neighbors() {
+                const packageNames = Object.keys(currentToken?.requires ?? {})
+                for (const packageName of packageNames) {
+                  yield this.packageLockJSON.dependencies[packageName]
+                }
+              }
+              yield {localId, neighbors: neighbors()}
+            }
+          }
+        }
+      }
+    }
   }
+
   canCoerceToType(data_contexts: IterableIterator<JsContext<PackageFile>>, current_type_name: string, coerce_to_type_name: string): IterableIterator<ContextAndBool> {
     throw new Error("Unimplemented!");
   }
