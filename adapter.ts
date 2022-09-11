@@ -156,7 +156,7 @@ query {
     dependencies {
       name @filter(op: "=", value: ["$packageName"]) @output
       version @output
-      requires {
+      requires @recurse(depth: 3) {
         foo: name @output
       }
     }
