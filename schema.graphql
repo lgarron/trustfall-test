@@ -3,13 +3,14 @@ schema {
 }
 
 type RootSchemaQuery {
-  Lockfile: NPMLockfile!
+  PackageFile: PackageFile!
+  PackageLockFile: PackageFile!
 }
 
 """
 Structure for `npm`'s `package-lock.json`.
 """
-type NPMLockfile {
+type PackageFile {
   """
   name!
   """
