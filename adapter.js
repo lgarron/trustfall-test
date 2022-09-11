@@ -1,14 +1,14 @@
-import {
+import init, {
   // Adapter,
   // JsEdgeParameters,
   // JsContext,
   // ContextAndValue,
   // ContextAndNeighborsIterator,
   // ContextAndBool,
-  initialize
 } from "./trustfall_wasm/trustfall_wasm.js";
 
-console.log(initialize)
+await init()
+// console.log(initialize())
 
 // import { getTopItems, getLatestItems, materializeItem, materializeUser } from './utils';
 // import HN_SCHEMA from './schema.graphql';
