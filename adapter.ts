@@ -7,6 +7,8 @@ import {
   JsEdgeParameters,
   ContextAndValue,
   JsContext,
+  ContextAndNeighborsIterator,
+  ContextAndBool,
 } from './trustfall_wasm/trustfall_wasm.js';
 
 initialize(); // Trustfall query system init.
@@ -72,6 +74,12 @@ export class LockfileAdapter implements Adapter<Vertices> {
         }
       }
     }
+  }
+  projectNeighbors(data_contexts: IterableIterator<JsContext<PackageFile>>, current_type_name: string, edge_name: string, parameters: JsEdgeParameters): IterableIterator<ContextAndNeighborsIterator<PackageFile>> {
+    throw new Error("Unimplemented!");
+  }
+  canCoerceToType(data_contexts: IterableIterator<JsContext<PackageFile>>, current_type_name: string, coerce_to_type_name: string): IterableIterator<ContextAndBool> {
+    throw new Error("Unimplemented!");
   }
 }
 
